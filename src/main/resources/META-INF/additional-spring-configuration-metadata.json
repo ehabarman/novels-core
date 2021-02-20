@@ -1,0 +1,31 @@
+{
+  "properties": [
+    {
+      "name": "security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Secret key used in encrypting jwt token."
+    },
+    {
+      "name": "security.jwt.expirationMs",
+      "type": "java.lang.Integer",
+      "description": "Jwt token expiration time in milliseconds.",
+      "defaultValue": 86400000
+    },
+    {
+      "name": "api.error.include-debug-message",
+      "type": "java.lang.Boolean",
+      "description": "Decideds whether the error message should contain the exception debug details.",
+      "defaultValue": false
+    },
+    {
+      "name": "securtiy.jwt.prefix",
+      "type": "java.lang.String",
+      "description": "Jwt token prefix in the header carrying it."
+    },
+    {
+      "name": "securtiy.jwt.header",
+      "type": "java.lang.String",
+      "description": "Authorization header name."
+    }
+  ]
+}
