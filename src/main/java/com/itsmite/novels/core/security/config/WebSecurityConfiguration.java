@@ -62,6 +62,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private void configureApiAccess(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                     .antMatchers(API_AUTH_V1_ENDPOINT + "/**").permitAll()
+                    .antMatchers("/v3/api-docs/**").permitAll()
+                    .antMatchers("/v2/api-docs/**").permitAll()
                     .antMatchers(API_ROLES_V1_ENDPOINT + "/**").permitAll()
                     .anyRequest().authenticated();
     }
@@ -69,7 +71,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-           .antMatchers("/resources/**", "/static/**", "/images/**");
+           .antMatchers("/v3/api-docs/**")
+           .antMatchers("/swagger-resources/**")
+           .antMatchers("/swagger-ui/**");
     }
 
     @Bean

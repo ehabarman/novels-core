@@ -28,7 +28,7 @@ public class RolesController {
 
     @JsonRequestMapping(path = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void signup(@Valid @RequestBody NewRoleRequest newRoleRequest) {
+    public void createRole(@Valid @RequestBody NewRoleRequest newRoleRequest) {
         roleService.createRole(newRoleRequest.getRole());
     }
 }
