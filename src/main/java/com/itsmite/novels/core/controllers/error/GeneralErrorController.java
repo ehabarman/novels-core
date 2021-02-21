@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Controller
-@RequestMapping("/api/error/v1") // Special controller, changing path must be done here and in properties file ${server.error.path}
+@RequestMapping("/error") // Special controller, changing path must be done here and in properties file ${server.error.path}
 public class GeneralErrorController extends AbstractErrorController {
 
     public GeneralErrorController(ErrorAttributes errorAttributes) {
@@ -37,6 +37,6 @@ public class GeneralErrorController extends AbstractErrorController {
 
     @Override
     public String getErrorPath() {
-        return "/api/error/v1";
+        return "/error";
     }
 }
