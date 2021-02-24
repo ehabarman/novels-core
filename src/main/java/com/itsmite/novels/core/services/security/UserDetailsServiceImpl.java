@@ -1,7 +1,7 @@
 package com.itsmite.novels.core.services.security;
 
-import com.itsmite.novels.core.models.User;
-import com.itsmite.novels.core.repositories.UserRepository;
+import com.itsmite.novels.core.models.user.User;
+import com.itsmite.novels.core.repositories.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

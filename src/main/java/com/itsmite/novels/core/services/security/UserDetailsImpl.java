@@ -1,7 +1,7 @@
 package com.itsmite.novels.core.services.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.itsmite.novels.core.models.User;
+import com.itsmite.novels.core.models.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

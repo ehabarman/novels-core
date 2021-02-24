@@ -1,6 +1,6 @@
-package com.itsmite.novels.core.repositories;
+package com.itsmite.novels.core.repositories.user;
 
-import com.itsmite.novels.core.models.User;
+import com.itsmite.novels.core.models.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

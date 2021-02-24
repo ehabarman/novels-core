@@ -1,10 +1,10 @@
 package com.itsmite.novels.core.services.user;
 
 import com.itsmite.novels.core.errors.exceptions.AlreadyUsedException;
-import com.itsmite.novels.core.models.User;
+import com.itsmite.novels.core.models.user.User;
 import com.itsmite.novels.core.models.security.ERole;
 import com.itsmite.novels.core.models.security.Role;
-import com.itsmite.novels.core.repositories.UserRepository;
+import com.itsmite.novels.core.repositories.user.UserRepository;
 import com.itsmite.novels.core.repositories.security.RoleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +31,17 @@ public class UserService implements UserDetailsService {
     private UserRepository        userRepository;
     private RoleRepository        roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserSpaceService      userSpaceService;
 
     @Autowired
-    public void autowireBeans(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public void autowireBeans(UserRepository userRepository,
+                              RoleRepository roleRepository,
+                              BCryptPasswordEncoder bCryptPasswordEncoder,
+                              UserSpaceService userSpaceService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userSpaceService = userSpaceService;
     }
 
     @Override
@@ -76,6 +81,8 @@ public class UserService implements UserDetailsService {
         user.setPassword(password);
         user.setEnabled(true);
         user.setVerified(true);
+        user.setWritingSpace(userSpaceService.createWritingSpace());
+        user.setReadingSpace(userSpaceService.createReadingSpace());
         return user;
     }
 

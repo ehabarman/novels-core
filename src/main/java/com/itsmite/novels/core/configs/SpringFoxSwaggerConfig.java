@@ -16,8 +16,7 @@ import java.util.Collections;
 @Configuration
 public class SpringFoxSwaggerConfig {
 
-    private static final String CONTROLLERS_ENDPOINTS_ANT = "/api/**";
-    private static final String ENTITIES_ENDPOINTS_REGEX  = "^\\/(?!(api|error|profile)).*";
+    private static final String ALL_ENDPOINTS_REGEX  = "^\\/(?!(error|profile)).*";
 
     @Bean
     public Docket api() {
@@ -26,7 +25,7 @@ public class SpringFoxSwaggerConfig {
             .securitySchemes(Collections.singletonList(apiKey()))
             .select()
             .apis(RequestHandlerSelectors.any())
-            .paths(PathSelectors.ant(CONTROLLERS_ENDPOINTS_ANT))
+            .paths(PathSelectors.regex(ALL_ENDPOINTS_REGEX))
             .build();
     }
 
