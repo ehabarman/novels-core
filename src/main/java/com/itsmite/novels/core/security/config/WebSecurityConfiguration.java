@@ -21,6 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static com.itsmite.novels.core.constants.EndpointConstants.API_AUTH_V1_ENDPOINT;
 import static com.itsmite.novels.core.constants.EndpointConstants.API_ROLES_V1_ENDPOINT;
 
+/**
+ * TODO: Authentication paths, rules and everything else should be loaded from configuration file xml or from database
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(

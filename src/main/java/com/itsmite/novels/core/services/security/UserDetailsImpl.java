@@ -1,7 +1,11 @@
 package com.itsmite.novels.core.services.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.itsmite.novels.core.models.security.ERole;
+import com.itsmite.novels.core.models.security.Role;
+import com.itsmite.novels.core.models.user.ReadingSpace;
 import com.itsmite.novels.core.models.user.User;
+import com.itsmite.novels.core.models.user.WritingSpace;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +16,7 @@ import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Setter
@@ -30,20 +35,23 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
-    private String readingSpaceId;
+    private ReadingSpace readingSpace;
 
-    private String writingSpaceId;
+    private WritingSpace writingSpace;
+
+    private Set<ERole> roles;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String id, String username, String email, String password, String readingSpaceId, String writingSpaceId,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String id, String username, String email, String password, ReadingSpace readingSpace, WritingSpace writingSpace,
+                           Set<ERole> roles, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.readingSpaceId = readingSpaceId;
-        this.writingSpaceId = writingSpaceId;
+        this.readingSpace = readingSpace;
+        this.writingSpace = writingSpace;
+        this.roles = roles;
         this.authorities = authorities;
     }
 
@@ -57,8 +65,9 @@ public class UserDetailsImpl implements UserDetails {
             user.getUsername(),
             user.getEmail(),
             user.getPassword(),
-            user.getReadingSpace().getId(),
-            user.getWritingSpace().getId(),
+            user.getReadingSpace(),
+            user.getWritingSpace(),
+            user.getRoles().stream().map(Role::getRole).collect(Collectors.toSet()),
             authorities);
     }
 

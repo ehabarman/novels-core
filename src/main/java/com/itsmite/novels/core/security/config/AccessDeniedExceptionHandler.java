@@ -21,7 +21,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class AccessDeniedExceptionHandler implements AccessDeniedHandler {
 
     private static final String USER_UNAUTHORIZED_MESSAGE_TEMPLATE = "User: %s attempted to access the protected URL: %s";
-    private static final String UNAUTHORIZED_ACCESS_MESSAGE        = "Unauthorized access";
+    private static final String UNAUTHORIZED_ACCESS_MESSAGE        = "Unauthorized action";
     private static final Gson   GSON                               = new Gson();
 
     @Override

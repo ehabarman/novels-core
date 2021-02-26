@@ -4,12 +4,14 @@ import com.itsmite.novels.core.errors.api.ApiError;
 import com.itsmite.novels.core.errors.exceptions.AlreadyUsedException;
 import com.itsmite.novels.core.errors.exceptions.InvalidCredentialsException;
 import com.itsmite.novels.core.errors.exceptions.ResourceNotFoundException;
+import com.itsmite.novels.core.errors.exceptions.UnauthorizedResourceAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,8 +31,18 @@ public class NovelExceptionsHandler {
     @Value("${api.error.include-debug-message}")
     private boolean includeDebugMessage;
 
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<Object> exception(HttpRequestMethodNotSupportedException exception) {
+        return buildResponse(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED, exception);
+    }
+
     @ExceptionHandler(value = UsernameNotFoundException.class)
     public ResponseEntity<Object> exception(UsernameNotFoundException exception) {
+        return buildResponse(exception.getMessage(), HttpStatus.UNAUTHORIZED, exception);
+    }
+
+    @ExceptionHandler(value = UnauthorizedResourceAction.class)
+    public ResponseEntity<Object> exception(UnauthorizedResourceAction exception) {
         return buildResponse(exception.getMessage(), HttpStatus.UNAUTHORIZED, exception);
     }
 
@@ -51,7 +63,7 @@ public class NovelExceptionsHandler {
 
     @ExceptionHandler(value = InternalServerErrorException.class)
     public ResponseEntity<Object> exception(InternalServerErrorException exception) {
-        return buildResponse(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, exception);
+        return buildResponse("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR, exception);
     }
 
     @ExceptionHandler(value = BadRequestException.class)
@@ -82,8 +94,7 @@ public class NovelExceptionsHandler {
     private ResponseEntity<Object> buildResponse(String message, HttpStatus status, Exception e) {
         log.error("Error exception {}: {}", e.getClass().getName(), message);
         log.error("Error details: {}", e.getMessage());
-        ApiError apiError = includeDebugMessage? new ApiError(status, message, e) : new ApiError(status, message, null);
+        ApiError apiError = includeDebugMessage ? new ApiError(status, message, e) : new ApiError(status, message, null);
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
-
 }

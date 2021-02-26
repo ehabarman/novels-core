@@ -16,7 +16,6 @@ public class RequestLoggingFilter extends PreSpringFilter {
 
     @Override
     protected void preFilter(HttpServletRequest request, HttpServletResponse response) {
-        log.info("RequestLoggingFilter says hi");
         logClientInfo();
         logRequest(request);
     }

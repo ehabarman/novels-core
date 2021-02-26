@@ -24,7 +24,6 @@ public class Chapter implements Persistable<String> {
 
     @Id
     @JsonIgnore
-    @Field("_id")
     @Indexed(unique = true, direction = IndexDirection.ASCENDING)
     private String id;
 
@@ -32,11 +31,15 @@ public class Chapter implements Persistable<String> {
     @NotEmpty
     private String title;
 
+    // TODO: content should be in a separated document to support lazy loading
+    @Field()
     private String content;
 
     private String authorNotes;
 
     boolean draft;
+
+    private String ownerId;
 
     @CreatedDate
     private Date createdAt;

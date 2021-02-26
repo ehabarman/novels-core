@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class RequestContext {
 
-    public static final String USER_ID          = "userId";
-    public static final String USERNAME         = "username";
-    public static final String EMAIL            = "email";
-    public static final String AUTHORITIES      = "authorities";
-    public static final String WRITING_SPACE_ID = "writingSpaceId";
-    public static final String READING_SPACE_ID = "readingSpaceId";
+    public static final String USER_ID       = "userId";
+    public static final String USERNAME      = "username";
+    public static final String EMAIL         = "email";
+    public static final String ROLES         = "roles";
+    public static final String AUTHORITIES   = "authorities";
+    public static final String WRITING_SPACE = "writingSpace";
+    public static final String READING_SPACE = "readingSpace";
 
     public void put(String key, Object value) {
         HttpServletRequest request = getAttributes();
