@@ -21,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private String id;
 
     private String username;
 
@@ -30,14 +30,20 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
+    private String readingSpaceId;
+
+    private String writingSpaceId;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
+    public UserDetailsImpl(String id, String username, String email, String password, String readingSpaceId, String writingSpaceId,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.readingSpaceId = readingSpaceId;
+        this.writingSpaceId = writingSpaceId;
         this.authorities = authorities;
     }
 
@@ -47,10 +53,12 @@ public class UserDetailsImpl implements UserDetails {
                                                  .map(SimpleGrantedAuthority::new)
                                                  .collect(Collectors.toList());
         return new UserDetailsImpl(
-            null,
+            user.getId(),
             user.getUsername(),
             user.getEmail(),
             user.getPassword(),
+            user.getReadingSpace().getId(),
+            user.getWritingSpace().getId(),
             authorities);
     }
 

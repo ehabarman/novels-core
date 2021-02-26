@@ -1,7 +1,7 @@
 package com.itsmite.novels.core.security.config;
 
 import com.itsmite.novels.core.security.jwt.AuthEntryPointJwt;
-import com.itsmite.novels.core.security.jwt.AuthTokenFilter;
+import com.itsmite.novels.core.filters.pre.AuthTokenFilter;
 import com.itsmite.novels.core.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

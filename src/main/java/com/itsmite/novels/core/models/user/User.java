@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -30,7 +29,6 @@ public class User implements Persistable<String> {
 
     @Id
     @JsonIgnore
-    @Field("_id")
     @Indexed(unique = true, direction = IndexDirection.ASCENDING)
     private String id;
 
@@ -55,11 +53,11 @@ public class User implements Persistable<String> {
     @DBRef
     private Set<Role> roles;
 
-    @DBRef
-    private ReadingSpace readingSpace = new ReadingSpace();
+    @DBRef(lazy = true)
+    private ReadingSpace readingSpace;
 
-    @DBRef
-    private WritingSpace writingSpace = new WritingSpace();
+    @DBRef(lazy = true)
+    private WritingSpace writingSpace;
 
     @Override
     public boolean isNew() {

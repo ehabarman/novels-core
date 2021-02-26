@@ -3,13 +3,11 @@ package com.itsmite.novels.core.models.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
@@ -20,12 +18,10 @@ import java.time.LocalDateTime;
  */
 @Setter
 @Getter
-@Document(collection = "writing_space")
+@Document
 public class WritingSpace implements Persistable<String> {
 
-    @Id
     @JsonIgnore
-    @Field("_id")
     @Indexed(unique = true, direction = IndexDirection.ASCENDING)
     private String id;
 

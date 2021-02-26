@@ -9,7 +9,6 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
@@ -20,12 +19,11 @@ import java.time.LocalDateTime;
  */
 @Setter
 @Getter
-@Document(collection = "reading_space")
+@Document
 public class ReadingSpace implements Persistable<String> {
 
     @Id
     @JsonIgnore
-    @Field("_id")
     @Indexed(unique = true, direction = IndexDirection.ASCENDING)
     private String id;
 

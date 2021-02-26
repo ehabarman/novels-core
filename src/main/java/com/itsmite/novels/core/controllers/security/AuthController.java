@@ -5,6 +5,7 @@ import com.itsmite.novels.core.errors.exceptions.InvalidCredentialsException;
 import com.itsmite.novels.core.payload.security.request.LoginRequest;
 import com.itsmite.novels.core.payload.security.request.SignupRequest;
 import com.itsmite.novels.core.security.jwt.JwtUtils;
+import com.itsmite.novels.core.services.security.UserDetailsImpl;
 import com.itsmite.novels.core.services.security.UserDetailsServiceImpl;
 import com.itsmite.novels.core.services.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,7 +61,7 @@ public class AuthController {
     @JsonRequestMapping(path = "/login", method = RequestMethod.POST)
     public Map<String, Object> login(@Valid @RequestBody LoginRequest loginRequest) {
         authenticate(loginRequest.getUsername(), loginRequest.getPassword());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
         Date jwtExpirationDate = new Date((new Date()).getTime() + jwtExpirationMs);
         String jwt = jwtUtils.generateJwtToken(userDetails, jwtExpirationDate);
         return new HashMap<>() {{

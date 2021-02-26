@@ -18,12 +18,12 @@
       "defaultValue": false
     },
     {
-      "name": "securtiy.jwt.prefix",
+      "name": "security.jwt.prefix",
       "type": "java.lang.String",
       "description": "Jwt token prefix in the header carrying it."
     },
     {
-      "name": "securtiy.jwt.header",
+      "name": "security.jwt.header",
       "type": "java.lang.String",
       "description": "Authorization header name."
     }
