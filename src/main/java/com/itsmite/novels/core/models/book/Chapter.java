@@ -10,12 +10,12 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -24,6 +24,7 @@ public class Chapter implements Persistable<String> {
 
     @Id
     @JsonIgnore
+    @NotNull
     @Indexed(unique = true, direction = IndexDirection.ASCENDING)
     private String id;
 
@@ -32,14 +33,13 @@ public class Chapter implements Persistable<String> {
     private String title;
 
     // TODO: content should be in a separated document to support lazy loading
-    @Field()
     private String content;
 
     private String authorNotes;
 
-    boolean draft;
+    private String bookId;
 
-    private String ownerId;
+    private boolean draft;
 
     @CreatedDate
     private Date createdAt;
@@ -52,5 +52,28 @@ public class Chapter implements Persistable<String> {
     @Override
     public boolean isNew() {
         return id == null;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) {
+            return true;
+        }
+
+        if (this.id == null) {
+            return false;
+        }
+
+        if (!(object instanceof Chapter)) {
+            return false;
+        }
+
+        Chapter chapter = (Chapter)object;
+        return Objects.equals(this.getId(), chapter.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id != null ? id.hashCode() : this.toString().hashCode();
     }
 }

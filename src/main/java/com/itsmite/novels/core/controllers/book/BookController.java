@@ -3,7 +3,6 @@ package com.itsmite.novels.core.controllers.book;
 import com.itsmite.novels.core.RequestContext;
 import com.itsmite.novels.core.annotations.JsonRequestMapping;
 import com.itsmite.novels.core.models.book.Book;
-import com.itsmite.novels.core.models.security.ERole;
 import com.itsmite.novels.core.models.user.WritingSpace;
 import com.itsmite.novels.core.payload.book.request.CreateBookRequest;
 import com.itsmite.novels.core.payload.book.request.UpdateBookRequest;
@@ -25,10 +24,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.itsmite.novels.core.constants.EndpointConstants.API_BOOKS_ENDPOINT;
+import static com.itsmite.novels.core.constants.EndpointConstants.BOOK_ID_PARAM;
+import static com.itsmite.novels.core.constants.EndpointConstants.BOOK_ID_PATH;
+import static com.itsmite.novels.core.constants.EndpointConstants.OWNER_ID_PARAM;
 
 @Slf4j
 @Validated
@@ -68,7 +69,7 @@ public class BookController {
 
     @JsonRequestMapping(path = "/owner/{ownerId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<BookResponse> getBooksByOwner(@PathVariable("ownerId") String ownerId,
+    public List<BookResponse> getBooksByOwner(@PathVariable(OWNER_ID_PARAM) String ownerId,
                                               @Min(0) @RequestParam(defaultValue = "0") int page,
                                               @Min(1) @Max(100) @RequestParam(defaultValue = "10") int size) {
         return bookService.findAllByOwnerId(ownerId, page, size).stream()
@@ -76,19 +77,17 @@ public class BookController {
                           .collect(Collectors.toList());
     }
 
-    @JsonRequestMapping(path = "/{bookId}", method = RequestMethod.PUT)
+    @JsonRequestMapping(path = BOOK_ID_PATH, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public BookResponse updateBook(@PathVariable("bookId") String bookId, @Valid @RequestBody UpdateBookRequest requestBody) {
-        Book book = bookService.getEditableBook(bookId,
-                                                (String)requestContext.get(RequestContext.USER_ID),
-                                                (Set<ERole>)requestContext.get(RequestContext.ROLES));
+    public BookResponse updateBook(@PathVariable(BOOK_ID_PARAM) String bookId, @Valid @RequestBody UpdateBookRequest requestBody) {
+        Book book = bookService.getEditableBook(bookId);
         book = bookService.updateBook(book, requestBody.getTitle(), requestBody.getDescription(), requestBody.getCoverPhoto(), requestBody.getStatus());
         return BookResponse.toResponse(book);
     }
 
-    @JsonRequestMapping(path = "/{bookId}", method = RequestMethod.GET)
+    @JsonRequestMapping(path = BOOK_ID_PATH, method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public BookResponse getBook(@PathVariable("bookId") String bookId) {
+    public BookResponse getBook(@PathVariable(BOOK_ID_PARAM) String bookId) {
         Book book = bookService.findBookById(bookId);
         return BookResponse.toResponse(book);
     }

@@ -1,7 +1,7 @@
 package com.itsmite.novels.core.payload.book.request;
 
-import com.itsmite.novels.core.models.book.BookStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,22 +12,22 @@ import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateBookRequest {
+public class UpdateChapterRequest {
 
     @NotNull
     @NotEmpty
     @Length(max = 100)
     private String title;
 
-    @NotNull
-    @NotEmpty
+    private String content;
+
     @Length(max = 1000)
-    private String description;
+    private String authorNotes;
 
     @NotNull
-    private BookStatus status;
-
-    private String coverPhoto;
+    @Builder.Default
+    private boolean draft = true;
 }

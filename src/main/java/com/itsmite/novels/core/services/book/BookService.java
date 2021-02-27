@@ -1,9 +1,11 @@
 package com.itsmite.novels.core.services.book;
 
+import com.itsmite.novels.core.RequestContext;
 import com.itsmite.novels.core.errors.exceptions.ResourceNotFoundException;
 import com.itsmite.novels.core.errors.exceptions.UnauthorizedResourceAction;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.book.BookStatus;
+import com.itsmite.novels.core.models.book.Chapter;
 import com.itsmite.novels.core.models.security.ERole;
 import com.itsmite.novels.core.models.user.WritingSpace;
 import com.itsmite.novels.core.repositories.book.BookRepository;
@@ -26,11 +28,13 @@ public class BookService {
 
     private BookRepository         bookRepository;
     private WritingSpaceRepository writingSpaceRepository;
+    private RequestContext         requestContext;
 
     @Autowired
-    public void autowireBeans(BookRepository bookRepository, WritingSpaceRepository writingSpaceRepository) {
+    public void autowireBeans(BookRepository bookRepository, WritingSpaceRepository writingSpaceRepository, RequestContext requestContext) {
         this.bookRepository = bookRepository;
         this.writingSpaceRepository = writingSpaceRepository;
+        this.requestContext = requestContext;
     }
 
     public List<Book> findAll(int page, int size) {
@@ -43,7 +47,9 @@ public class BookService {
         return pageBooks.getContent();
     }
 
-    public Book getEditableBook(String bookId, String userId, Set<ERole> roles) {
+    public Book getEditableBook(String bookId) {
+        String userId = (String)requestContext.get(RequestContext.USER_ID);
+        Set<ERole> roles = (Set<ERole>)requestContext.get(RequestContext.ROLES);
         Book book = findBookById(bookId);
         if (!book.getOwnerId().equals(userId)) {
             if (CollectionUtil.isNullOrEmpty(roles) || !roles.contains(ERole.ADMIN)) {
@@ -74,6 +80,16 @@ public class BookService {
         book.setDescription(description);
         book.setCoverPhoto(coverPhoto);
         book.setStatus(status);
+        return bookRepository.save(book);
+    }
+
+    public Book addChapter(Book book, Chapter chapter) {
+        book.getChapters().add(chapter);
+        return bookRepository.save(book);
+    }
+
+    public Book removeChapter(Book book, Chapter chapter) {
+        book.getChapters().remove(chapter);
         return bookRepository.save(book);
     }
 }

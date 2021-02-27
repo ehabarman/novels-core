@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Setter
@@ -78,6 +79,11 @@ public class Book implements Persistable<String> {
         }
 
         Book book = (Book)object;
-        return this.id.equals(book.getId());
+        return Objects.equals(this.getId(), book.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id != null ? id.hashCode() : this.toString().hashCode();
     }
 }
