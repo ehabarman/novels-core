@@ -1,6 +1,7 @@
 package com.itsmite.novels.core.payload.book.response;
 
 import com.itsmite.novels.core.models.book.Book;
+import com.itsmite.novels.core.models.book.BookStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class BookResponse {
 
     private String ownerId;
 
+    private BookStatus status;
+
     private Date createdAt;
 
     private LocalDateTime updateAt;
@@ -36,8 +39,9 @@ public class BookResponse {
             book.getDescription(),
             book.getCoverPhoto(),
             book.getOwnerId(),
+            book.getStatus(),
             book.getCreatedAt(),
             book.getUpdatedAt()
-        ) : new BookResponse();
+        ) : null;
     }
 }

@@ -39,6 +39,8 @@ public class Book implements Persistable<String> {
 
     private String ownerId;
 
+    private BookStatus status;
+
     @DBRef(lazy = true)
     private Set<Chapter> chapters;
 
@@ -48,10 +50,12 @@ public class Book implements Persistable<String> {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    // TODO: Should we keep it?
     private LocalDateTime deletedAt;
 
     public Book() {
         this.chapters = new HashSet<>();
+        this.status = BookStatus.IN_PROGRESS;
     }
 
     @Override

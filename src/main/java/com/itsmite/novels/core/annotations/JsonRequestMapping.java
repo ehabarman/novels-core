@@ -29,8 +29,8 @@ public @interface JsonRequestMapping {
     String[] headers() default {};
 
     @AliasFor(annotation = RequestMapping.class, attribute = "consumes")
-    String[] consumes() default {};
+    String[] consumes() default {APPLICATION_JSON};
 
     @AliasFor(annotation = RequestMapping.class, attribute = "produces")
-    String[] produces() default {};
+    String[] produces() default {APPLICATION_JSON};
 }

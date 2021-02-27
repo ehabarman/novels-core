@@ -6,24 +6,32 @@ import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.security.ERole;
 import com.itsmite.novels.core.models.user.WritingSpace;
 import com.itsmite.novels.core.payload.book.request.CreateBookRequest;
+import com.itsmite.novels.core.payload.book.request.UpdateBookRequest;
 import com.itsmite.novels.core.payload.book.response.BookResponse;
 import com.itsmite.novels.core.services.book.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.itsmite.novels.core.constants.EndpointConstants.API_BOOKS_ENDPOINT;
 
 @Slf4j
+@Validated
 @RestController
 @RequestMapping(value = API_BOOKS_ENDPOINT)
 public class BookController {
@@ -50,13 +58,38 @@ public class BookController {
         return BookResponse.toResponse(book);
     }
 
-    @JsonRequestMapping(path = "/{bookId}", method = RequestMethod.DELETE)
+    @JsonRequestMapping(path = "", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public BookResponse deleteBook(@PathVariable String bookId) {
+    public List<BookResponse> getBooks(@Min(0) @RequestParam(defaultValue = "0") int page, @Min(1) @Max(100) @RequestParam(defaultValue = "10") int size) {
+        return bookService.findAll(page, size).stream()
+                          .map(BookResponse::toResponse)
+                          .collect(Collectors.toList());
+    }
+
+    @JsonRequestMapping(path = "/owner/{ownerId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookResponse> getBooksByOwner(@PathVariable("ownerId") String ownerId,
+                                              @Min(0) @RequestParam(defaultValue = "0") int page,
+                                              @Min(1) @Max(100) @RequestParam(defaultValue = "10") int size) {
+        return bookService.findAllByOwnerId(ownerId, page, size).stream()
+                          .map(BookResponse::toResponse)
+                          .collect(Collectors.toList());
+    }
+
+    @JsonRequestMapping(path = "/{bookId}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public BookResponse updateBook(@PathVariable("bookId") String bookId, @Valid @RequestBody UpdateBookRequest requestBody) {
         Book book = bookService.getEditableBook(bookId,
                                                 (String)requestContext.get(RequestContext.USER_ID),
                                                 (Set<ERole>)requestContext.get(RequestContext.ROLES));
-        book = bookService.deleteBook(book, (WritingSpace)requestContext.get(RequestContext.WRITING_SPACE));
+        book = bookService.updateBook(book, requestBody.getTitle(), requestBody.getDescription(), requestBody.getCoverPhoto(), requestBody.getStatus());
+        return BookResponse.toResponse(book);
+    }
+
+    @JsonRequestMapping(path = "/{bookId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public BookResponse getBook(@PathVariable("bookId") String bookId) {
+        Book book = bookService.findBookById(bookId);
         return BookResponse.toResponse(book);
     }
 }

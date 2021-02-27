@@ -11,13 +11,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.UnexpectedTypeException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
+import java.util.Set;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * Handler for custom defined exceptions
@@ -73,12 +81,38 @@ public class NovelExceptionsHandler {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public ResponseEntity<Object> exception(HttpMessageNotReadableException exception) {
-        return buildResponse("Please make sure you are using a valid request body", HttpStatus.BAD_REQUEST, exception);
+        String message = ofNullable(exception.getMessage())
+            .map(msg -> msg.replaceAll("[a-zA-Z0-9.]*\\.(?=[A-Z])", ""))
+            .orElse("Request body is not a valid json");
+        return buildResponse(message, HttpStatus.BAD_REQUEST, exception);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Object> exception(MethodArgumentNotValidException exception) {
-        return buildResponse("Please make sure you are using a valid request body", HttpStatus.BAD_REQUEST, exception);
+        FieldError fieldError = exception.getBindingResult().getFieldError();
+        String message = ofNullable(fieldError)
+            .map(error -> String.format("Field {name=%s: value=%s}: %s", error.getField(), error.getRejectedValue(), error.getDefaultMessage()))
+            .orElse("Method arguments are not valid ");
+        return buildResponse(message, HttpStatus.BAD_REQUEST, exception);
+    }
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    ResponseEntity<Object> exception(ConstraintViolationException exception) {
+        Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
+        ApiError apiError = includeDebugMessage
+                            ? new ApiError(HttpStatus.BAD_REQUEST, "Constraints are not met", exception)
+                            : new ApiError(HttpStatus.BAD_REQUEST, "Constraints are not met", null);
+        apiError.addValidationErrors(constraintViolations);
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    ResponseEntity<Object> exception(MethodArgumentTypeMismatchException exception) {
+        String fieldName = exception.getName();
+        Object fieldValue = exception.getValue();
+        String expectedType = ofNullable(exception.getRequiredType()).map(Class::getName).orElse("String");
+        String message = String.format("Field {name=%s: value=%s}: expected field type '%s'", fieldName, fieldValue, expectedType);
+        return buildResponse(message, HttpStatus.BAD_REQUEST, exception);
     }
 
     @ExceptionHandler(value = Exception.class)
@@ -89,6 +123,11 @@ public class NovelExceptionsHandler {
     @ExceptionHandler(value = InvalidCredentialsException.class)
     public ResponseEntity<Object> exception(InvalidCredentialsException exception) {
         return buildResponse(exception.getMessage(), HttpStatus.UNAUTHORIZED, exception);
+    }
+
+    @ExceptionHandler(value = UnexpectedTypeException.class)
+    public ResponseEntity<Object> exception(UnexpectedTypeException exception) {
+        return buildResponse(exception.getMessage(), HttpStatus.BAD_REQUEST, exception);
     }
 
     private ResponseEntity<Object> buildResponse(String message, HttpStatus status, Exception e) {
