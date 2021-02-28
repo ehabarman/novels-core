@@ -88,7 +88,7 @@ public class BookController {
     @JsonRequestMapping(path = BOOK_ID_PATH, method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public BookResponse getBook(@PathVariable(BOOK_ID_PARAM) String bookId) {
-        Book book = bookService.findBookById(bookId);
+        Book book = bookService.findBookByIdOrElseThrowException(bookId);
         return BookResponse.toResponse(book);
     }
 }

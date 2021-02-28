@@ -1,9 +1,9 @@
-package com.itsmite.novels.core.graphql.resolvers.auth.mutations;
+package com.itsmite.novels.core.graphql.auth.mutations;
 
 import com.itsmite.novels.core.errors.exceptions.InvalidCredentialsException;
-import com.itsmite.novels.core.graphql.resolvers.auth.inputs.RegisterInput;
-import com.itsmite.novels.core.graphql.resolvers.auth.types.JwtTokenType;
-import com.itsmite.novels.core.graphql.resolvers.user.types.UserType;
+import com.itsmite.novels.core.graphql.auth.inputs.RegisterInput;
+import com.itsmite.novels.core.graphql.auth.types.JwtTokenType;
+import com.itsmite.novels.core.graphql.user.types.UserType;
 import com.itsmite.novels.core.models.user.User;
 import com.itsmite.novels.core.security.jwt.JwtUtils;
 import com.itsmite.novels.core.services.security.UserDetailsImpl;

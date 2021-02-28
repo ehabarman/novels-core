@@ -57,14 +57,14 @@ public class ChapterController {
     @JsonRequestMapping(path = "", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<ChapterResponse> getBookChapters(@PathVariable(BOOK_ID_PARAM) String bookId) {
-        Book book = bookService.findBookById(bookId);
+        Book book = bookService.findBookByIdOrElseThrowException(bookId);
         return book.getChapters().stream().map(ChapterResponse::toResponse).collect(Collectors.toList());
     }
 
     @JsonRequestMapping(path = CHAPTER_ID_PATH, method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public ChapterResponse getChapter(@PathVariable(BOOK_ID_PARAM) String bookId, @PathVariable(CHAPTER_ID_PARAM) String chapterId) {
-        Book book = bookService.findBookById(bookId);
+        Book book = bookService.findBookByIdOrElseThrowException(bookId);
         return book.getChapters().stream()
                    .filter(chapter -> Objects.equals(chapter.getId(), chapterId))
                    .findFirst()

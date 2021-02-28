@@ -1,6 +1,6 @@
-package com.itsmite.novels.core.graphql.resolvers.user.queries;
+package com.itsmite.novels.core.graphql.user.queries;
 
-import com.itsmite.novels.core.graphql.resolvers.user.types.UserType;
+import com.itsmite.novels.core.graphql.user.types.UserType;
 import com.itsmite.novels.core.models.user.User;
 import com.itsmite.novels.core.services.user.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;

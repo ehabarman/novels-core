@@ -1,4 +1,4 @@
-package com.itsmite.novels.core.graphql.resolvers.base;
+package com.itsmite.novels.core.graphql.base;
 
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.stereotype.Component;

@@ -5,3 +5,8 @@ type Query {
 type Mutation {
     # Keep empty
 }
+
+input NumericPaginationInput {
+    size: Int! = 10
+    offset: Int! = 0
+}

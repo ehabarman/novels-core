@@ -1,0 +1,21 @@
+extend type Query {
+    book(id: ID!): Book
+}
+
+type Book {
+    id: String!
+    title: String!
+    description: String!
+    coverPhoto: String
+    ownerId: String!
+    status: BookStatus!
+    createdAt: String!
+    updatedAt:String!
+}
+
+enum BookStatus {
+    COMPLETED,
+    DROPPED,
+    HIATUS,
+    IN_PROGRESS
+}

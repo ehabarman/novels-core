@@ -1,8 +1,9 @@
-package com.itsmite.novels.core.payload.book.response;
+package com.itsmite.novels.core.graphql.book.types;
 
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.book.BookStatus;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +11,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Data
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class BookResponse {
+@AllArgsConstructor
+public class BookType {
 
     private String id;
 
@@ -32,8 +34,8 @@ public class BookResponse {
 
     private LocalDateTime updatedAt;
 
-    public static BookResponse toResponse(Book book) {
-        return book != null ? new BookResponse(
+    public static BookType fromType(Book book) {
+        return book != null ? new BookType(
             book.getId(),
             book.getTitle(),
             book.getDescription(),

@@ -100,6 +100,6 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(String userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User of id " + userId));
+        return userRepository.findById(userId).orElse(null);
     }
 }

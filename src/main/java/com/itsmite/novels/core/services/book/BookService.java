@@ -50,7 +50,7 @@ public class BookService {
     public Book getEditableBook(String bookId) {
         String userId = (String)requestContext.get(RequestContext.USER_ID);
         Set<ERole> roles = (Set<ERole>)requestContext.get(RequestContext.ROLES);
-        Book book = findBookById(bookId);
+        Book book = findBookByIdOrElseThrowException(bookId);
         if (!book.getOwnerId().equals(userId)) {
             if (CollectionUtil.isNullOrEmpty(roles) || !roles.contains(ERole.ADMIN)) {
                 throw new UnauthorizedResourceAction(RESOURCE_TYPE, bookId);
@@ -59,8 +59,12 @@ public class BookService {
         return book;
     }
 
-    public Book findBookById(String bookId) {
+    public Book findBookByIdOrElseThrowException(String bookId) {
         return bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Book of id " + bookId));
+    }
+
+    public Book findBookBy(String bookId) {
+        return bookRepository.findById(bookId).orElse(null);
     }
 
     public Book createBook(String title, String description, String coverPhoto, String ownerId, WritingSpace writingSpace) {

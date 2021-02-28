@@ -1,9 +1,9 @@
 extend type Mutation {
-    register(input: RegisterInput!): UserType!
-    login(username:String!, password: String!): JwtTokenType!
+    register(input: RegisterInput!): User!
+    login(username:String!, password: String!): JwtToken!
 }
 
-type JwtTokenType {
+type JwtToken {
     token: String!
     expirationDate: String!
 }
