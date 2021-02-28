@@ -1,0 +1,7 @@
+type Query {
+    # Keep empty
+}
+
+type Mutation {
+    # Keep empty
+}

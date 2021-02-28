@@ -67,6 +67,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(API_AUTH_V1_ENDPOINT + "/**").permitAll()
                     .antMatchers("/v3/api-docs/**").permitAll()
                     .antMatchers("/v2/api-docs/**").permitAll()
+                    .antMatchers("/graphql/**").permitAll()
+                    .antMatchers("/graphiql/**").permitAll()
                     .antMatchers(API_ROLES_V1_ENDPOINT + "/**").permitAll()
                     .anyRequest().authenticated();
     }

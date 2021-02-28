@@ -1,0 +1,16 @@
+extend type Mutation {
+    register(input: RegisterInput!): UserType!
+    login(username:String!, password: String!): JwtTokenType!
+}
+
+type JwtTokenType {
+    token: String!
+    expirationDate: String!
+}
+
+input RegisterInput {
+    email: String!
+    username: String!
+    password: String!
+}
+
