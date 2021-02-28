@@ -1,7 +1,8 @@
-package com.itsmite.novels.core.graphql.book.types;
+package com.itsmite.novels.core.graphql.resolvers.book.types;
 
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.book.BookStatus;
+import com.itsmite.novels.core.util.CollectionUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -9,7 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Setter
@@ -45,5 +50,14 @@ public class BookType {
             book.getCreatedAt(),
             book.getUpdatedAt()
         ) : null;
+    }
+
+    public static List<BookType> fromType(Collection<Book> books) {
+        if (CollectionUtil.isNullOrEmpty(books)) {
+            return Collections.emptyList();
+        }
+        return books.stream()
+                    .map(BookType::fromType)
+                    .collect(Collectors.toList());
     }
 }

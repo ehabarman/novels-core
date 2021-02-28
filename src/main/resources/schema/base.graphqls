@@ -1,3 +1,8 @@
+directive @range(
+    min: Int!
+    max: Int!
+) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
 type Query {
     # Keep empty
 }
@@ -7,6 +12,6 @@ type Mutation {
 }
 
 input NumericPaginationInput {
-    size: Int! = 10
-    offset: Int! = 0
+    size: Int! = 10 @range(min: 1, max: 100)
+    offset: Int! = 0 @range(min: 0, max: 1000)
 }

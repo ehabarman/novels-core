@@ -1,4 +1,4 @@
-package com.itsmite.novels.core.graphql.auth.inputs;
+package com.itsmite.novels.core.graphql.resolvers.auth.inputs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

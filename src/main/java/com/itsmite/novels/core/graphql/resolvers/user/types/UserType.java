@@ -1,6 +1,6 @@
-package com.itsmite.novels.core.graphql.user.types;
+package com.itsmite.novels.core.graphql.resolvers.user.types;
 
-import com.itsmite.novels.core.graphql.book.types.BookType;
+import com.itsmite.novels.core.graphql.resolvers.book.types.BookType;
 import com.itsmite.novels.core.models.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;

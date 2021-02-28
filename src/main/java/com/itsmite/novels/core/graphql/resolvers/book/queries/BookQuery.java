@@ -1,7 +1,7 @@
-package com.itsmite.novels.core.graphql.book.queries;
+package com.itsmite.novels.core.graphql.resolvers.book.queries;
 
 import com.itsmite.novels.core.RequestContext;
-import com.itsmite.novels.core.graphql.book.types.BookType;
+import com.itsmite.novels.core.graphql.resolvers.book.types.BookType;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.services.book.BookService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
