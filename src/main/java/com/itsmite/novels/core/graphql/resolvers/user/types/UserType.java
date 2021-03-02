@@ -29,6 +29,10 @@ public class UserType {
 
     private List<BookType> writtenBooks;
 
+    public UserType(String id) {
+        this.id = id;
+    }
+
     public static UserType fromType(User user) {
         return user != null
                ? new UserType(user.getId(), user.getUsername(), user.getEmail(), user.getCreatedAt(), new ArrayList<>())

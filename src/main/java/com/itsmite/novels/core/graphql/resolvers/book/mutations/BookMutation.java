@@ -2,12 +2,11 @@ package com.itsmite.novels.core.graphql.resolvers.book.mutations;
 
 import com.itsmite.novels.core.RequestContext;
 import com.itsmite.novels.core.graphql.resolvers.book.inputs.CreateBookInput;
+import com.itsmite.novels.core.graphql.resolvers.book.inputs.UpdateBookInput;
 import com.itsmite.novels.core.graphql.resolvers.book.types.BookType;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.user.WritingSpace;
-import com.itsmite.novels.core.payload.book.response.BookResponse;
 import com.itsmite.novels.core.services.book.BookService;
-import com.itsmite.novels.core.services.user.UserService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,7 +27,6 @@ public class BookMutation implements GraphQLMutationResolver {
         this.requestContext = requestContext;
     }
 
-
     public BookType createBook(@Valid CreateBookInput input) {
         Book book = bookService.createBook(
             input.getTitle(),
@@ -37,6 +35,12 @@ public class BookMutation implements GraphQLMutationResolver {
             (String)requestContext.get(RequestContext.USER_ID),
             (WritingSpace)requestContext.get(RequestContext.WRITING_SPACE)
         );
+        return BookType.fromType(book);
+    }
+
+    public BookType updateBook(@Valid UpdateBookInput input) {
+        Book book = bookService.getEditableBook(input.getBookId());
+        book = bookService.updateBook(book, input.getTitle(), input.getDescription(), input.getCoverPhoto(), input.getStatus());
         return BookType.fromType(book);
     }
 }

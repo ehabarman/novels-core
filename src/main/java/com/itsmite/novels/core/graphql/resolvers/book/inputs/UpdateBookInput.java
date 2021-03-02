@@ -1,4 +1,4 @@
-package com.itsmite.novels.core.payload.book.request;
+package com.itsmite.novels.core.graphql.resolvers.book.inputs;
 
 import com.itsmite.novels.core.models.book.BookStatus;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateBookRequest {
+public class UpdateBookInput {
+
+    @NotNull
+    @NotBlank
+    private String bookId;
 
     @NotNull
     @NotBlank

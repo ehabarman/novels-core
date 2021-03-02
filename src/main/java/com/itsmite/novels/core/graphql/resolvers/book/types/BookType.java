@@ -1,5 +1,6 @@
 package com.itsmite.novels.core.graphql.resolvers.book.types;
 
+import com.itsmite.novels.core.graphql.resolvers.user.types.UserType;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.book.BookStatus;
 import com.itsmite.novels.core.util.CollectionUtil;
@@ -31,7 +32,7 @@ public class BookType {
 
     private String coverPhoto;
 
-    private String ownerId;
+    private UserType owner;
 
     private BookStatus status;
 
@@ -45,7 +46,7 @@ public class BookType {
             book.getTitle(),
             book.getDescription(),
             book.getCoverPhoto(),
-            book.getOwnerId(),
+            new UserType(book.getOwnerId()),
             book.getStatus(),
             book.getCreatedAt(),
             book.getUpdatedAt()
