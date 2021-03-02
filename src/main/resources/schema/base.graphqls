@@ -1,7 +1,14 @@
 directive @range(
-    min: Int!
-    max: Int!
+    min: Int
+    max: Int
 ) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @length(
+    min: Int
+    max: Int
+    keepTrailingSpaces: Boolean! = false
+    keepLeadingSpaces: Boolean! = false
+) on ARGUMENT_DEFINITION
 
 type Query {
     # Keep empty

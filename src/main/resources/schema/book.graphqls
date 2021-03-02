@@ -2,6 +2,10 @@ extend type Query {
     book(id: ID!): Book
 }
 
+extend type Mutation {
+    createBook(input: CreateBookInput!): Book
+}
+
 type Book {
     id: String!
     title: String!
@@ -18,4 +22,10 @@ enum BookStatus {
     DROPPED,
     HIATUS,
     IN_PROGRESS
+}
+
+input CreateBookInput {
+    title: String!
+    description: String!
+    coverPhoto: String
 }
