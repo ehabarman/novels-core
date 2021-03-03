@@ -1,7 +1,7 @@
 package com.itsmite.novels.core.repositories.user;
 
 import com.itsmite.novels.core.models.user.ReadingSpace;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.itsmite.novels.core.repositories.ResourceRepository;
 
-public interface ReadingSpaceRepository extends MongoRepository<ReadingSpace, String> {
+public interface ReadingSpaceRepository extends ResourceRepository<ReadingSpace, String> {
 }

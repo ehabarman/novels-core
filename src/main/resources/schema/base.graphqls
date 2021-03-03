@@ -19,6 +19,6 @@ type Mutation {
 }
 
 input NumericPaginationInput {
-    size: Int! = 10 @range(min: 1, max: 100)
-    offset: Int! = 0 @range(min: 0, max: 1000)
+    size: Int! = 10
+    offset: Int! = 0
 }

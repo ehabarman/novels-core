@@ -3,6 +3,8 @@ package com.itsmite.novels.core.services.book;
 import com.itsmite.novels.core.RequestContext;
 import com.itsmite.novels.core.errors.exceptions.ResourceNotFoundException;
 import com.itsmite.novels.core.errors.exceptions.UnauthorizedResourceAction;
+import com.itsmite.novels.core.graphql.resolvers.base.inputs.NumericPaginationInput;
+import com.itsmite.novels.core.graphql.resolvers.book.inputs.BooksFilter;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.book.BookStatus;
 import com.itsmite.novels.core.models.book.Chapter;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,6 +47,15 @@ public class BookService {
 
     public List<Book> findAllByOwnerId(String ownerId, int page, int size) {
         Page<Book> pageBooks = bookRepository.findAllByOwnerId(ownerId, PageRequest.of(page, size));
+        return pageBooks.getContent();
+    }
+
+    public List<Book> findAllByFilter(BooksFilter booksFilter, int page, int size) {
+        if (booksFilter == null) {
+            return findAll(page, size);
+        }
+        Query query = booksFilter.buildQuery();
+        Page<Book> pageBooks = bookRepository.findAll(query, PageRequest.of(page, size));
         return pageBooks.getContent();
     }
 

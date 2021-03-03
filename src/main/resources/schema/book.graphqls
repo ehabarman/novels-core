@@ -1,5 +1,6 @@
 extend type Query {
     book(bookId: ID!): Book
+    books(filter: BooksFilter, pagination: NumericPaginationInput!): [Book!]!
 }
 
 extend type Mutation {
@@ -37,4 +38,8 @@ input UpdateBookInput {
     title: String!
     description: String!
     coverPhoto: String
+}
+
+input BooksFilter {
+    status: BookStatus
 }

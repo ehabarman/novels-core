@@ -2,22 +2,28 @@ package com.itsmite.novels.core.graphql.resolvers.base.inputs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.Min;
 
+import static java.util.Optional.ofNullable;
+
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class NumericPaginationInput {
 
     @Min(1)
-    private int size;
+    private Integer size;
 
     @Min(0)
-    private int offset;
+    private Integer offset;
+
+    public int getSize() {
+        return ofNullable(size).orElse(10);
+    }
+
+    public int getOffset() {
+        return ofNullable(offset).orElse(0);
+    }
 }

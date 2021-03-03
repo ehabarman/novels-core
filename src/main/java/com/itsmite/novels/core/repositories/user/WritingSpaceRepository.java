@@ -1,7 +1,7 @@
 package com.itsmite.novels.core.repositories.user;
 
 import com.itsmite.novels.core.models.user.WritingSpace;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.itsmite.novels.core.repositories.ResourceRepository;
 
-public interface WritingSpaceRepository extends MongoRepository<WritingSpace, String> {
+public interface WritingSpaceRepository extends ResourceRepository<WritingSpace, String> {
 }

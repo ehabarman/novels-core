@@ -1,15 +1,17 @@
 package com.itsmite.novels.core.graphql.resolvers.book.queries;
 
 import com.itsmite.novels.core.RequestContext;
+import com.itsmite.novels.core.graphql.resolvers.base.inputs.NumericPaginationInput;
+import com.itsmite.novels.core.graphql.resolvers.book.inputs.BooksFilter;
 import com.itsmite.novels.core.graphql.resolvers.book.types.BookType;
-import com.itsmite.novels.core.graphql.resolvers.user.types.UserType;
 import com.itsmite.novels.core.models.book.Book;
-import com.itsmite.novels.core.models.user.User;
 import com.itsmite.novels.core.services.book.BookService;
 import com.itsmite.novels.core.services.user.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BookQuery implements GraphQLQueryResolver {
@@ -30,6 +32,8 @@ public class BookQuery implements GraphQLQueryResolver {
         return BookType.fromType(book);
     }
 
-
-
+    public List<BookType> getBooks(BooksFilter booksFilter, NumericPaginationInput paginationInput) {
+        List<Book> books = bookService.findAllByFilter(booksFilter, paginationInput.getOffset(), paginationInput.getSize());
+        return BookType.fromType(books);
+    }
 }

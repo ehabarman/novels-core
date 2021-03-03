@@ -1,11 +1,11 @@
 package com.itsmite.novels.core.repositories.user;
 
 import com.itsmite.novels.core.models.user.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.itsmite.novels.core.repositories.ResourceRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository extends ResourceRepository<User, String> {
 
     Optional<User> findByUsername(String username);
 
