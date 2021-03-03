@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -19,12 +19,12 @@ import javax.validation.constraints.NotNull;
 public class UpdateBookRequest {
 
     @NotNull
-    @NotBlank
+    @NotEmpty
     @Length(max = 100)
     private String title;
 
     @NotNull
-    @NotBlank
+    @NotEmpty
     @Length(max = 1000)
     private String description;
 

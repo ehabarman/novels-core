@@ -3,7 +3,6 @@ package com.itsmite.novels.core.services.book;
 import com.itsmite.novels.core.RequestContext;
 import com.itsmite.novels.core.errors.exceptions.ResourceNotFoundException;
 import com.itsmite.novels.core.errors.exceptions.UnauthorizedResourceAction;
-import com.itsmite.novels.core.graphql.resolvers.base.inputs.NumericPaginationInput;
 import com.itsmite.novels.core.graphql.resolvers.book.inputs.BooksFilter;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.models.book.BookStatus;

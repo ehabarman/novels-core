@@ -10,10 +10,13 @@ import com.itsmite.novels.core.services.user.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Component
+@Validated
 public class BookQuery implements GraphQLQueryResolver {
 
     private BookService    bookService;
@@ -32,7 +35,7 @@ public class BookQuery implements GraphQLQueryResolver {
         return BookType.fromType(book);
     }
 
-    public List<BookType> getBooks(BooksFilter booksFilter, NumericPaginationInput paginationInput) {
+    public List<BookType> getBooks(@Valid BooksFilter booksFilter,@Valid NumericPaginationInput paginationInput) {
         List<Book> books = bookService.findAllByFilter(booksFilter, paginationInput.getOffset(), paginationInput.getSize());
         return BookType.fromType(books);
     }

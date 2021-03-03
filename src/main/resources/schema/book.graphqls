@@ -42,4 +42,5 @@ input UpdateBookInput {
 
 input BooksFilter {
     status: BookStatus
+    ownerId: String
 }
