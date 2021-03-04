@@ -41,6 +41,7 @@ public class AuthMutation implements GraphQLMutationResolver {
         this.userDetailsService = userDetailsService;
     }
 
+    @SuppressWarnings("Used by graphql")
     public JwtTokenType login(String username, String password) {
         authenticate(username, password);
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
@@ -49,9 +50,10 @@ public class AuthMutation implements GraphQLMutationResolver {
         return new JwtTokenType(jwt, jwtExpirationDate.toString());
     }
 
+    @SuppressWarnings("Used by graphql")
     public UserType register(RegisterInput registerInput) {
         User user = userService.createUser(registerInput.getEmail(), registerInput.getUsername(), registerInput.getPassword());
-        return UserType.fromType(user);
+        return UserType.toType(user);
     }
 
     private void authenticate(String username, String password) {

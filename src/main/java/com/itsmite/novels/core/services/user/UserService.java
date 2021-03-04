@@ -1,7 +1,6 @@
 package com.itsmite.novels.core.services.user;
 
 import com.itsmite.novels.core.errors.exceptions.AlreadyUsedException;
-import com.itsmite.novels.core.errors.exceptions.ResourceNotFoundException;
 import com.itsmite.novels.core.models.security.ERole;
 import com.itsmite.novels.core.models.security.Role;
 import com.itsmite.novels.core.models.user.User;

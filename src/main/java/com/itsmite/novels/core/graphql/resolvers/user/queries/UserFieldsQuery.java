@@ -20,8 +20,9 @@ public class UserFieldsQuery implements GraphQLResolver<UserType> {
         this.userService = userService;
     }
 
+    @SuppressWarnings("Used by graphql")
     public List<BookType> getWrittenBooks(UserType userType) {
         User user = userService.findById(userType.getId());
-        return BookType.fromType(user.getWritingSpace().getBooks());
+        return BookType.toType(user.getWritingSpace().getBooks());
     }
 }

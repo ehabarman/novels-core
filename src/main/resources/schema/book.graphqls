@@ -6,6 +6,9 @@ extend type Query {
 extend type Mutation {
     createBook(input: CreateBookInput!): Book!
     updateBook(input: UpdateBookInput!): Book!
+    createChapter(input: CreateChapterInput!): Chapter!
+    deleteChapter(bookId: ID!, chapterId: ID!): Chapter!
+    updateChapter(input: UpdateChapterInput!): Chapter!
 }
 
 type Book {
@@ -15,8 +18,20 @@ type Book {
     coverPhoto: String
     owner: User!
     status: BookStatus!
+    chapter(id: ID!): Chapter
+    chapters: [Chapter!]!
     createdAt: String!
     updatedAt:String!
+}
+
+type Chapter {
+    id: ID!
+    title: String!
+    draft: Boolean!
+    content: String!
+    authorNotes: String
+    createdAt: String!
+    updateAt: String!
 }
 
 enum BookStatus {
@@ -43,4 +58,21 @@ input UpdateBookInput {
 input BooksFilter {
     status: BookStatus
     ownerId: String
+}
+
+input CreateChapterInput {
+    bookId: String!
+    title: String!
+    content: String!
+    authorNotes: String
+    draft: Boolean! = true
+}
+
+input UpdateChapterInput {
+    bookId: ID!
+    chapterId: ID!
+    title: String!
+    content: String!
+    authorNotes: String
+    draft: Boolean! = true
 }
