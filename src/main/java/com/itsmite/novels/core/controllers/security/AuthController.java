@@ -4,7 +4,7 @@ import com.itsmite.novels.core.annotations.JsonRequestMapping;
 import com.itsmite.novels.core.errors.exceptions.InvalidCredentialsException;
 import com.itsmite.novels.core.payload.security.request.LoginRequest;
 import com.itsmite.novels.core.payload.security.request.SignupRequest;
-import com.itsmite.novels.core.security.jwt.JwtUtils;
+import com.itsmite.novels.core.util.JwtUtils;
 import com.itsmite.novels.core.services.security.UserDetailsImpl;
 import com.itsmite.novels.core.services.security.UserDetailsServiceImpl;
 import com.itsmite.novels.core.services.user.UserService;

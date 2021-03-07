@@ -1,4 +1,4 @@
-package com.itsmite.novels.core.security.jwt;
+package com.itsmite.novels.core.errors.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

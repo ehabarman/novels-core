@@ -1,4 +1,4 @@
-package com.itsmite.novels.core.security.jwt;
+package com.itsmite.novels.core.util;
 
 import com.itsmite.novels.core.services.security.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;

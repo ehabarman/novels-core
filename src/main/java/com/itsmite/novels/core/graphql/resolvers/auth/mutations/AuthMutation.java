@@ -5,7 +5,7 @@ import com.itsmite.novels.core.graphql.resolvers.auth.inputs.RegisterInput;
 import com.itsmite.novels.core.graphql.resolvers.auth.types.JwtTokenType;
 import com.itsmite.novels.core.graphql.resolvers.user.types.UserType;
 import com.itsmite.novels.core.models.user.User;
-import com.itsmite.novels.core.security.jwt.JwtUtils;
+import com.itsmite.novels.core.util.JwtUtils;
 import com.itsmite.novels.core.services.security.UserDetailsImpl;
 import com.itsmite.novels.core.services.security.UserDetailsServiceImpl;
 import com.itsmite.novels.core.services.user.UserService;

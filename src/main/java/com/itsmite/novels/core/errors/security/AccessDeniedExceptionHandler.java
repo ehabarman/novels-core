@@ -1,4 +1,4 @@
-package com.itsmite.novels.core.security.config;
+package com.itsmite.novels.core.errors.security;
 
 import com.google.gson.Gson;
 import com.itsmite.novels.core.errors.api.ApiError;

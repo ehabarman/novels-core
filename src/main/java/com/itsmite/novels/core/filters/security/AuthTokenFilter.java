@@ -1,6 +1,6 @@
-package com.itsmite.novels.core.filters.pre;
+package com.itsmite.novels.core.filters.security;
 
-import com.itsmite.novels.core.security.jwt.JwtUtils;
+import com.itsmite.novels.core.util.JwtUtils;
 import com.itsmite.novels.core.services.security.UserDetailsImpl;
 import com.itsmite.novels.core.services.security.UserDetailsServiceImpl;
 import com.itsmite.novels.core.util.StringUtil;
