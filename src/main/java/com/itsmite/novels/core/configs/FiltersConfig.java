@@ -35,6 +35,9 @@ import java.util.Set;
 
 import static com.itsmite.novels.core.constants.ResourcesConstants.FILTERS_CONFIGURATION_FILE;
 
+/**
+ * Responsible for building filters beans
+ */
 @Configuration
 public class FiltersConfig {
 
@@ -51,7 +54,7 @@ public class FiltersConfig {
     }
 
     @Bean
-    public BeanFactoryPostProcessor filterDisablingPostProcessor() {
+    public BeanFactoryPostProcessor filtersPostProcessorBean() {
         XmlResourceLoader<List<FilterConfiguration>> xmlResourceLoader = new XmlResourceLoader<>(this::processFiltersConfigurations);
         List<FilterConfiguration> configurations = xmlResourceLoader.process(FILTERS_CONFIGURATION_FILE);
         return new BeanFactoryPostProcessor() {
@@ -104,6 +107,9 @@ public class FiltersConfig {
         return (Filter)constructor.newInstance(new RequestContext());
     }
 
+    /**
+     * Process xml configuration file
+     */
     private List<FilterConfiguration> processFiltersConfigurations(Document document) {
         List<FilterConfiguration> filtersConfigurations = getFiltersConfigurations(document, PRE_FILTERS_XPATH);
         filtersConfigurations.addAll(getFiltersConfigurations(document, POST_FILTERS_XPATH));
