@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:element name="filters">
+      <xsd:complexType mixed="true">
+         <xsd:sequence>
+            <xsd:element name="provider"/>
+            <xsd:element name="pre">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="filter" minOccurs="0" maxOccurs="1000">
+                        <xsd:complexType mixed="true">
+                           <xsd:sequence >
+                              <xsd:element name="name" type="xsd:string"/>
+                              <xsd:element name="class" type="xsd:string"/>
+                              <xsd:element name="order" type="xsd:integer"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="post">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="filter" minOccurs="0" maxOccurs="1000">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="class" type="xsd:string"/>
+                              <xsd:element name="name" type="xsd:string"/>
+                              <xsd:element name="order" type="xsd:integer"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

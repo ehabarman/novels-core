@@ -1,6 +1,8 @@
 package com.itsmite.novels.core.filters;
 
 import com.itsmite.novels.core.RequestContext;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Setter
+@Getter
 public abstract class SpringFilter implements Filter {
 
     protected RequestContext requestContext;

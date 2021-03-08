@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<filters xsi:noNamespaceSchemaLocation="filters.xml.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <provider>FiltersConfig</provider>
+   <pre>
+      <filter>
+         <name>extractUserDetailsFilter</name>
+         <class>com.itsmite.novels.core.filters.pre.ExtractUserDetailsFilter</class>
+         <order>1</order>
+      </filter>
+      <filter>
+         <name>requestLoggingFilter</name>
+         <class>com.itsmite.novels.core.filters.pre.RequestLoggingFilter</class>
+         <order>2</order>
+      </filter>
+   </pre>
+
+   <post>
+   </post>
+</filters>
