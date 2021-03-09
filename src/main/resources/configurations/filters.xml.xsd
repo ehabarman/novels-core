@@ -7,7 +7,7 @@
             <xsd:element name="pre">
                <xsd:complexType>
                   <xsd:sequence>
-                     <xsd:element name="filter" minOccurs="0" maxOccurs="1000">
+                     <xsd:element name="filter" minOccurs="0" maxOccurs="unbounded">
                         <xsd:complexType mixed="true">
                            <xsd:sequence >
                               <xsd:element name="name" type="xsd:string"/>
@@ -22,7 +22,7 @@
             <xsd:element name="post">
                <xsd:complexType>
                   <xsd:sequence>
-                     <xsd:element name="filter" minOccurs="0" maxOccurs="1000">
+                     <xsd:element name="filter" minOccurs="0" maxOccurs="unbounded">
                         <xsd:complexType>
                            <xsd:sequence>
                               <xsd:element name="class" type="xsd:string"/>
