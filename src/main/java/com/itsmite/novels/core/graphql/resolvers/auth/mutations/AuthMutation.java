@@ -42,7 +42,7 @@ public class AuthMutation implements GraphQLMutationResolver {
         this.userDetailsService = userDetailsService;
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAnonymous()")
     public JwtTokenType login(String username, String password) {
         authenticate(username, password);
@@ -52,7 +52,7 @@ public class AuthMutation implements GraphQLMutationResolver {
         return new JwtTokenType(jwt, jwtExpirationDate.toString());
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAnonymous()")
     public UserType register(RegisterInput registerInput) {
         User user = userService.createUser(registerInput.getEmail(), registerInput.getUsername(), registerInput.getPassword());

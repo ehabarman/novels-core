@@ -36,7 +36,7 @@ public class BookMutation implements GraphQLMutationResolver {
         this.requestContext = requestContext;
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAuthenticated()")
     public BookType createBook(@Valid CreateBookInput input) {
         Book book = bookService.createBook(
@@ -49,7 +49,7 @@ public class BookMutation implements GraphQLMutationResolver {
         return BookType.toType(book);
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAuthenticated()")
     public BookType updateBook(@Valid UpdateBookInput input) {
         Book book = bookService.getEditableBook(input.getBookId());
@@ -57,7 +57,7 @@ public class BookMutation implements GraphQLMutationResolver {
         return BookType.toType(book);
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAuthenticated()")
     public ChapterType createChapter(@Valid CreateChapterInput input) {
         Book book = bookService.getEditableBook(input.getBookId());
@@ -66,7 +66,7 @@ public class BookMutation implements GraphQLMutationResolver {
         return ChapterType.toType(chapter);
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAuthenticated()")
     public ChapterType updateChapter(@Valid UpdateChapterInput input) {
         Book book = bookService.getEditableBook(input.getBookId());
@@ -78,7 +78,7 @@ public class BookMutation implements GraphQLMutationResolver {
         return ChapterType.toType(chapter);
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAuthenticated()")
     public ChapterType deleteChapter(String bookId, String chapterId) {
         Book book = bookService.getEditableBook(bookId);

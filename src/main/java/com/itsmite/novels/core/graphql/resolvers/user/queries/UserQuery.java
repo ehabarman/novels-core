@@ -17,7 +17,7 @@ public class UserQuery implements GraphQLQueryResolver {
         this.userService = userService;
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     public UserType getUser(String id) {
         User user = userService.findById(id);
         return UserType.toType(user);

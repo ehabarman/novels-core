@@ -30,13 +30,13 @@ public class BookQuery implements GraphQLQueryResolver {
         this.requestContext = requestContext;
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     public BookType getBook(String bookId) {
         Book book = bookService.findBookBy(bookId);
         return BookType.toType(book);
     }
 
-    @SuppressWarnings("Used by graphql")
+    @SuppressWarnings("Used by graphql reflection")
     public List<BookType> getBooks(@Valid BooksFilter booksFilter,@Valid NumericPaginationInput paginationInput) {
         List<Book> books = bookService.findAllByFilter(booksFilter, paginationInput.getOffset(), paginationInput.getSize());
         return BookType.toType(books);
