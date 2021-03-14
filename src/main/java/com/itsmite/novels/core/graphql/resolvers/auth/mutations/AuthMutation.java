@@ -12,6 +12,7 @@ import com.itsmite.novels.core.services.user.UserService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +43,7 @@ public class AuthMutation implements GraphQLMutationResolver {
     }
 
     @SuppressWarnings("Used by graphql")
+    @PreAuthorize("isAnonymous()")
     public JwtTokenType login(String username, String password) {
         authenticate(username, password);
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
@@ -51,6 +53,7 @@ public class AuthMutation implements GraphQLMutationResolver {
     }
 
     @SuppressWarnings("Used by graphql")
+    @PreAuthorize("isAnonymous()")
     public UserType register(RegisterInput registerInput) {
         User user = userService.createUser(registerInput.getEmail(), registerInput.getUsername(), registerInput.getPassword());
         return UserType.toType(user);
