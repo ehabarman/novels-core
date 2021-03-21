@@ -20,6 +20,7 @@ class InstrumentationService {
     public List<Instrumentation> instrumentations() {
         // Note: Due to a bug in GraphQLWebAutoConfiguration, the returned list has to be modifiable (it will be sorted)
         return new ArrayList<>(List.of(
+            new AuthorizeGraphqlRequestInstrumentation(),
             new RequestLoggingInstrumentation()
         ));
     }
