@@ -21,13 +21,13 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public void createRole(ERole eRole) {
+    public Role createRole(ERole eRole) {
         if (roleRepository.existsByRole(eRole)) {
             throw new AlreadyUsedException("role", eRole.name());
         }
         Role role = new Role(eRole);
         try {
-            roleRepository.save(role);
+            return roleRepository.save(role);
         } catch (Exception ex) {
             log.error("Failed to create role: Something went wrong: {}", ex.getMessage());
             throw new InternalServerErrorException("Something went wrong");

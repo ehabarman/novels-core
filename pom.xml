@@ -110,6 +110,12 @@
          <artifactId>mysql-connector-java</artifactId>
          <scope>runtime</scope>
       </dependency>
+      <dependency>
+         <groupId>de.flapdoodle.embed</groupId>
+         <artifactId>de.flapdoodle.embed.mongo</artifactId>
+         <version>2.2.0</version>
+         <scope>test</scope>
+      </dependency>
 
       <!--   lombok Dependencies   -->
       <dependency>
@@ -172,6 +178,12 @@
                <artifactId>hamcrest-core</artifactId>
             </exclusion>
          </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>com.tngtech.junit.dataprovider</groupId>
+         <artifactId>junit4-dataprovider</artifactId>
+         <version>2.6</version>
+         <scope>test</scope>
       </dependency>
 
       <!-- Apache Commons Dependencies-->
