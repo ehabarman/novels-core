@@ -71,7 +71,7 @@ public class BookMutation implements GraphQLMutationResolver {
     public ChapterType updateChapter(@Valid UpdateChapterInput input) {
         Book book = bookService.getEditableBook(input.getBookId());
         Chapter chapter = chapterService.findChapterById(input.getChapterId());
-        if (!chapterService.doesChapterBelongToBook(chapter, book)) {
+        if (chapterService.chapterDoesntBelongToBook(chapter, book)) {
             throw new ResourceNotFoundException("Chapter of id " + input.getChapterId());
         }
         chapter = chapterService.updateChapter(chapter, input.getTitle(), input.getContent(), input.getAuthorNotes(), input.isDraft());

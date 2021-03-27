@@ -87,7 +87,7 @@ public class ChapterController {
                                          @Valid @RequestBody UpdateChapterRequest request) {
         Book book = bookService.getEditableBook(bookId);
         Chapter chapter = chapterService.findChapterById(chapterId);
-        if (!chapterService.doesChapterBelongToBook(chapter, book)) {
+        if (chapterService.chapterDoesntBelongToBook(chapter, book)) {
             throw new ResourceNotFoundException("Chapter of id " + chapterId);
         }
         chapter = chapterService.updateChapter(chapter, request.getTitle(), request.getContent(), request.getAuthorNotes(), request.isDraft());

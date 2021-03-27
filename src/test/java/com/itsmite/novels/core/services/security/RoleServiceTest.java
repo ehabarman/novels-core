@@ -1,5 +1,6 @@
 package com.itsmite.novels.core.services.security;
 
+import com.itsmite.novels.core.boot.NAssert;
 import com.itsmite.novels.core.boot.SpringRunnerWithDataProvider;
 import com.itsmite.novels.core.errors.exceptions.AlreadyUsedException;
 import com.itsmite.novels.core.models.security.ERole;
@@ -7,7 +8,6 @@ import com.itsmite.novels.core.models.security.Role;
 import com.itsmite.novels.core.repositories.security.RoleRepository;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -44,7 +44,7 @@ public class RoleServiceTest {
         Mockito.when(roleRepository.existsByRole(eRole)).thenReturn(false);
         Mockito.when(roleRepository.save(any())).thenReturn(role);
         Role result = roleService.createRole(eRole);
-        Assert.assertEquals(role, result);
+        NAssert.assertEquals(role, result);
     }
 
     @Test
@@ -54,9 +54,9 @@ public class RoleServiceTest {
         Mockito.when(roleRepository.save(any())).thenThrow(internalException);
         try {
             roleService.createRole(eRole);
-            Assert.fail("Should have failed");
+            NAssert.fail("Should have failed");
         } catch (Exception actualException) {
-            Assert.assertEquals(expectedException, actualException.getClass());
+            NAssert.assertEquals(expectedException, actualException.getClass());
         }
     }
 

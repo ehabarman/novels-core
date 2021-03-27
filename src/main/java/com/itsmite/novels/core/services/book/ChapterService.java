@@ -50,6 +50,10 @@ public class ChapterService {
         return chapterRepository.save(chapter);
     }
 
+    public boolean chapterDoesntBelongToBook(Chapter chapter, Book book) {
+        return !doesChapterBelongToBook(chapter, book);
+    }
+
     public boolean doesChapterBelongToBook(Chapter chapter, Book book) {
         if (chapter.getDeletedAt() != null) {
             return false;

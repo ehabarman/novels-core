@@ -1,5 +1,6 @@
 package com.itsmite.novels.core.services.security;
 
+import com.itsmite.novels.core.boot.NAssert;
 import com.itsmite.novels.core.boot.SpringRunnerWithDataProvider;
 import com.itsmite.novels.core.models.security.ERole;
 import com.itsmite.novels.core.models.security.Role;
@@ -7,7 +8,6 @@ import com.itsmite.novels.core.models.user.ReadingSpace;
 import com.itsmite.novels.core.models.user.User;
 import com.itsmite.novels.core.models.user.WritingSpace;
 import com.itsmite.novels.core.repositories.user.UserRepository;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -19,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -49,15 +50,15 @@ public class UserDetailsServiceImplTest {
         User user = getUser();
         Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        Assert.assertEquals(user.getId(), userDetails.getId());
-        Assert.assertEquals(user.getUsername(), userDetails.getUsername());
-        Assert.assertEquals(user.getEmail(), userDetails.getEmail());
-        Assert.assertEquals(user.getPassword(), userDetails.getPassword());
-        Assert.assertEquals(user.getReadingSpace(), userDetails.getReadingSpace());
-        Assert.assertEquals(user.getWritingSpace(), userDetails.getWritingSpace());
-        Set<ERole> eRoles = user.getRoles().stream().map(Role::getRole).collect(Collectors.toSet());
-        Assert.assertEquals(eRoles, userDetails.getRoles());
-        Assert.assertEquals(buildAuthorities(eRoles), userDetails.getAuthorities());
+        NAssert.assertEquals(user.getId(), userDetails.getId());
+        NAssert.assertEquals(user.getUsername(), userDetails.getUsername());
+        NAssert.assertEquals(user.getEmail(), userDetails.getEmail());
+        NAssert.assertEquals(user.getPassword(), userDetails.getPassword());
+        NAssert.assertEquals(user.getReadingSpace(), userDetails.getReadingSpace());
+        NAssert.assertEquals(user.getWritingSpace(), userDetails.getWritingSpace());
+        List<ERole> eRoles = user.getRoles().stream().map(Role::getRole).collect(Collectors.toList());
+        NAssert.assertNonSortedCollectionEquals(eRoles, userDetails.getRoles());
+        NAssert.assertNonSortedCollectionEquals((Collection)buildAuthorities(eRoles), userDetails.getAuthorities());
     }
 
     @Test(expected = UsernameNotFoundException.class)
@@ -78,7 +79,7 @@ public class UserDetailsServiceImplTest {
         return user;
     }
 
-    private List<GrantedAuthority> buildAuthorities(Set<ERole> roles) {
+    private List<GrantedAuthority> buildAuthorities(List<ERole> roles) {
         return roles.stream()
                     .map(ERole::name)
                     .map(SimpleGrantedAuthority::new)
