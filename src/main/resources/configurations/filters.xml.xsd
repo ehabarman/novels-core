@@ -9,7 +9,7 @@
                   <xsd:sequence>
                      <xsd:element name="filter" minOccurs="0" maxOccurs="unbounded">
                         <xsd:complexType mixed="true">
-                           <xsd:sequence >
+                           <xsd:sequence>
                               <xsd:element name="name" type="xsd:string"/>
                               <xsd:element name="class" type="xsd:string"/>
                               <xsd:element name="order" type="xsd:integer"/>
@@ -23,10 +23,10 @@
                <xsd:complexType>
                   <xsd:sequence>
                      <xsd:element name="filter" minOccurs="0" maxOccurs="unbounded">
-                        <xsd:complexType>
+                        <xsd:complexType mixed="true">
                            <xsd:sequence>
-                              <xsd:element name="class" type="xsd:string"/>
                               <xsd:element name="name" type="xsd:string"/>
+                              <xsd:element name="class" type="xsd:string"/>
                               <xsd:element name="order" type="xsd:integer"/>
                            </xsd:sequence>
                         </xsd:complexType>
