@@ -5,10 +5,10 @@ import com.itsmite.novels.core.graphql.resolvers.auth.inputs.RegisterInput;
 import com.itsmite.novels.core.graphql.resolvers.auth.types.JwtTokenType;
 import com.itsmite.novels.core.graphql.resolvers.user.types.UserType;
 import com.itsmite.novels.core.models.user.User;
-import com.itsmite.novels.core.util.JwtUtils;
 import com.itsmite.novels.core.services.security.UserDetailsImpl;
 import com.itsmite.novels.core.services.security.UserDetailsServiceImpl;
 import com.itsmite.novels.core.services.user.UserService;
+import com.itsmite.novels.core.util.JwtUtils;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +17,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Component
+@Validated
 public class AuthMutation implements GraphQLMutationResolver {
 
     @Value("${security.jwt.expirationMs}")
@@ -44,7 +48,7 @@ public class AuthMutation implements GraphQLMutationResolver {
 
     @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAnonymous()")
-    public JwtTokenType login(String username, String password) {
+    public JwtTokenType login(@NotEmpty String username, @NotEmpty String password) {
         authenticate(username, password);
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
         Date jwtExpirationDate = new Date((new Date()).getTime() + jwtExpirationMs);
@@ -54,7 +58,8 @@ public class AuthMutation implements GraphQLMutationResolver {
 
     @SuppressWarnings("Used by graphql reflection")
     @PreAuthorize("isAnonymous()")
-    public UserType register(RegisterInput registerInput) {
+    public UserType register(@Valid RegisterInput registerInput) {
+        registerInput.setEmail(registerInput.getEmail().toLowerCase());
         User user = userService.createUser(registerInput.getEmail(), registerInput.getUsername(), registerInput.getPassword());
         return UserType.toType(user);
     }
