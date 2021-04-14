@@ -3,6 +3,11 @@ extend type Mutation {
     login(username:String!, password: String!): JwtToken!
 }
 
+extend type Query {
+    """ Returns true if it was performed by a user with a valid token"""
+    loggedIn: Boolean!
+}
+
 type JwtToken {
     token: String!
     expirationDate: String!

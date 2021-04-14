@@ -1,12 +1,10 @@
 package com.itsmite.novels.core.graphql.resolvers.book.queries;
 
-import com.itsmite.novels.core.RequestContext;
 import com.itsmite.novels.core.graphql.resolvers.base.inputs.NumericPaginationInput;
 import com.itsmite.novels.core.graphql.resolvers.book.inputs.BooksFilter;
 import com.itsmite.novels.core.graphql.resolvers.book.types.BookType;
 import com.itsmite.novels.core.models.book.Book;
 import com.itsmite.novels.core.services.book.BookService;
-import com.itsmite.novels.core.services.user.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,14 +18,10 @@ import java.util.List;
 public class BookQuery implements GraphQLQueryResolver {
 
     private BookService    bookService;
-    private UserService    userService;
-    private RequestContext requestContext;
 
     @Autowired
-    public void autowireBeans(BookService bookService, UserService userService, RequestContext requestContext) {
+    public void autowireBeans(BookService bookService) {
         this.bookService = bookService;
-        this.userService = userService;
-        this.requestContext = requestContext;
     }
 
     @SuppressWarnings("Used by graphql reflection")
