@@ -25,6 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 import static com.itsmite.novels.core.constants.EndpointConstants.API_AUTH_V1_ENDPOINT;
+import static com.itsmite.novels.core.constants.EndpointConstants.API_HEALTH_V1_ENDPOINT;
 import static com.itsmite.novels.core.constants.EndpointConstants.API_ROLES_V1_ENDPOINT;
 
 /**
@@ -77,6 +78,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/graphiql/**").permitAll()
                     .antMatchers("/vendor/graphiql/**").permitAll()
                     .antMatchers(API_ROLES_V1_ENDPOINT + "/**").permitAll()
+                    .antMatchers(API_HEALTH_V1_ENDPOINT + "/**").permitAll()
                     .anyRequest().authenticated();
     }
 

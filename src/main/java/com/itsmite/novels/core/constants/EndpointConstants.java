@@ -8,6 +8,7 @@ public class EndpointConstants {
     public static final String CHAPTER_ID_PARAM = "chapterId";
     public static final String OWNER_ID_PARAM   = "ownerId";
 
+    public static final String API_HEALTH_V1_ENDPOINT  = "/api/health/v1";
     public static final String API_AUTH_V1_ENDPOINT  = "/api/auth/v1";
     public static final String API_ROLES_V1_ENDPOINT = "/api/roles/v1";
 
