@@ -78,7 +78,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/graphiql/**").permitAll()
                     .antMatchers("/vendor/graphiql/**").permitAll()
                     .antMatchers(API_ROLES_V1_ENDPOINT + "/**").permitAll()
-                    .antMatchers(API_HEALTH_V1_ENDPOINT + "/**").permitAll()
                     .anyRequest().authenticated();
     }
 
@@ -87,7 +86,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
            .antMatchers("/v3/api-docs/**")
            .antMatchers("/swagger-resources/**")
-           .antMatchers("/swagger-ui/**");
+           .antMatchers("/swagger-ui/**")
+           .antMatchers(API_HEALTH_V1_ENDPOINT + "*/**");
     }
 
     @Bean
