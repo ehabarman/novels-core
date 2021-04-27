@@ -43,3 +43,7 @@ The following guides illustrate how to use some features concretely:
 * [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
 * [Producing a SOAP web service](https://spring.io/guides/gs/producing-web-service/)
 
+### Build docker image
+Use command "*docker image build -t novel-core .*"
+To run image in container use "*docker container run --name novel-core -p 6969:6969 -d novel-core*"
+To show logs use "*docker container logs novel-core*"

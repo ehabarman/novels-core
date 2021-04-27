@@ -54,8 +54,8 @@ public class FiltersConfig {
     }
 
     @Bean
-    public BeanFactoryPostProcessor filtersPostProcessorBean() {
-        XmlResourceLoader<List<FilterConfiguration>> xmlResourceLoader = new XmlResourceLoader<>(this::processFiltersConfigurations);
+    public static BeanFactoryPostProcessor filtersPostProcessorBean() {
+        XmlResourceLoader<List<FilterConfiguration>> xmlResourceLoader = new XmlResourceLoader<>(FiltersConfig::processFiltersConfigurations);
         List<FilterConfiguration> configurations = xmlResourceLoader.process(FILTERS_CONFIGURATION_FILE);
         return new BeanFactoryPostProcessor() {
 
@@ -100,7 +100,7 @@ public class FiltersConfig {
         };
     }
 
-    private Filter createFilter(FilterConfiguration filterConfiguration) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
+    private static Filter createFilter(FilterConfiguration filterConfiguration) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
         InvocationTargetException, InstantiationException {
         Class classType = Class.forName(filterConfiguration.getClassPath());
         Constructor<?> constructor = classType.getConstructor(RequestContext.class);
@@ -110,13 +110,13 @@ public class FiltersConfig {
     /**
      * Process xml configuration file
      */
-    private List<FilterConfiguration> processFiltersConfigurations(Document document) {
+    private static List<FilterConfiguration> processFiltersConfigurations(Document document) {
         List<FilterConfiguration> filtersConfigurations = getFiltersConfigurations(document, PRE_FILTERS_XPATH);
         filtersConfigurations.addAll(getFiltersConfigurations(document, POST_FILTERS_XPATH));
         return filtersConfigurations;
     }
 
-    private List<FilterConfiguration> getFiltersConfigurations(Document document, String xpath) {
+    private static List<FilterConfiguration> getFiltersConfigurations(Document document, String xpath) {
         XPath xPath = XPathFactory.newInstance().newXPath();
         try {
             NodeList nodeList = (NodeList)xPath.compile(xpath).evaluate(document, XPathConstants.NODESET);
