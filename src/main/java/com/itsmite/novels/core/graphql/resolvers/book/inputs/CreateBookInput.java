@@ -22,8 +22,9 @@ public class CreateBookInput {
     @Length(max = 100)
     private String title;
 
-    @NotNull
-    @NotEmpty
+    // TODO: uncomment these in future
+//    @NotNull
+//    @NotEmpty
     @Length(max = 1000)
     private String description;
 

@@ -14,7 +14,7 @@ extend type Mutation {
 type Book {
     id: String!
     title: String!
-    description: String!
+    description: String
     coverPhoto: String
     owner: User!
     status: BookStatus!
@@ -43,7 +43,7 @@ enum BookStatus {
 
 input CreateBookInput {
     title: String!
-    description: String!
+    description: String
     coverPhoto: String
 }
 
